@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_listFragment_to_finishedTasksFragment"
             app:destination="@id/finishedTasksFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_taskDetailsFragment"
+            app:destination="@id/taskDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/createWorkFragment"
@@ -27,4 +30,13 @@
         android:name="com.example.todolist.view.FinishedTasksFragment"
         android:label="fragment_finished_tasks"
         tools:layout="@layout/fragment_finished_tasks" />
+    <fragment
+        android:id="@+id/taskDetailsFragment"
+        android:name="com.example.todolist.view.TaskDetailsFragment"
+        android:label="fragment_task_details"
+        tools:layout="@layout/fragment_task_details" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 </navigation>

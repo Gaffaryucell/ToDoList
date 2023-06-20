@@ -17,7 +17,14 @@
         android:padding="16dp" />
 
     <EditText
-        android:id="@+id/editTextTask"
+        android:id="@+id/etTaskTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Yapılacak görevi girin"
+        android:padding="16dp" />
+
+    <EditText
+        android:id="@+id/etTaskDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Yapılacak görevi girin"
@@ -31,5 +38,15 @@
         android:layout_gravity="end"
         android:padding="16dp" />
 
+    <ImageView
+        android:id="@+id/calendar_image_view"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/calendar" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

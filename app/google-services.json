@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "948991765167",
+    "project_id": "organic-mind",
+    "storage_bucket": "organic-mind.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948991765167:android:39184cbc42123257ef025a",
+        "android_client_info": {
+          "package_name": "com.example.todolist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948991765167-pi7h8bnftps1d7siousr613q8001a5ke.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQfZs1-woAtHMQXEmntx3BsRJgICJl9ro"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "948991765167-pi7h8bnftps1d7siousr613q8001a5ke.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -11,21 +11,27 @@ import com.example.todolist.model.TaskModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 class CreateTaskViewModel : ViewModel() {
 
     // Veritabanı nesnesini oluştur
-    private lateinit var studentDao: TaskDao
+    private lateinit var tasksDao: TaskDao
     var selectedDate = MutableLiveData<String>()
+    var tasks = MutableLiveData<List<TaskModel>>()
 
+    init {
+        getDate()
+    }
     fun createTask(application : Context,title : String,description : String,date : String){
         val db = TaskDatabaseSingleton.getDatabase(application)
-        studentDao = db.studentDao()
+        tasksDao = db.studentDao()
         // Task ekle
         CoroutineScope(Dispatchers.IO).launch {
             val task = TaskModel(0, title,description,date,false)
-            studentDao.insertTask(task)
+            tasksDao.insertTask(task)
         }
     }
     fun selectDate(context : Context) {
@@ -42,6 +48,22 @@ class CreateTaskViewModel : ViewModel() {
         }, year, month, day)
         dpd.show()
     }
-
-
+    fun getTasks(application: Context) {
+        val db = TaskDatabaseSingleton.getDatabase(application)
+        tasksDao = db.studentDao()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val mylist = tasksDao.getAllFinishedTasks(false) as ArrayList<TaskModel>
+                tasks.postValue(mylist) // Verileri MutableLiveData'nin postValue() fonksiyonuyla güncelle
+            } catch (e: Exception) {
+                println(e.localizedMessage)
+            }
+        }
+    }
+    fun getDate() {
+        val today = LocalDate.now()
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        val formattedToday = today.format(formatter)
+        selectedDate.value = formattedToday
+    }
 }

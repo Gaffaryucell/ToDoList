@@ -16,6 +16,8 @@ import com.example.todolist.adapter.TaskAdapter
 import com.example.todolist.databinding.FragmentListBinding
 import com.example.todolist.model.TaskModel
 import com.example.todolist.viewmodel.ListViewModel
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class ListFragment : Fragment() {
 
@@ -23,13 +25,13 @@ class ListFragment : Fragment() {
     private lateinit var binding: FragmentListBinding
     private lateinit var adapter: TaskAdapter
     private lateinit var mySelectedDate: String
-    private lateinit var toDay : String
+    private lateinit var toDay: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentListBinding.inflate(inflater,container,false)
+        binding = FragmentListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -49,57 +51,60 @@ class ListFragment : Fragment() {
         observeLiveData()
         // TaskAdapter'ı oluşturma ve RecyclerView'a bağlama
         binding.taskrecyclerview.layoutManager = LinearLayoutManager(requireContext())
-        binding.button.setOnClickListener{
+        binding.button.setOnClickListener {
             val action = ListFragmentDirections.actionListFragmentToCreateWorkFragment()
             Navigation.findNavController(it).navigate(action)
         }
-        binding.button.setOnLongClickListener(object : View.OnLongClickListener{
+        binding.button.setOnLongClickListener(object : View.OnLongClickListener {
             override fun onLongClick(p0: View?): Boolean {
                 val action = ListFragmentDirections.actionListFragmentToFinishedTasksFragment()
                 Navigation.findNavController(p0!!).navigate(action)
                 return true
             }
         })
-        binding.dateImageView.setOnClickListener{
+        binding.dateImageView.setOnClickListener {
             viewModel.selectDate(requireContext())
         }
-        binding.allImageView.setOnClickListener{
+        binding.allImageView.setOnClickListener {
             mySelectedDate = "all"
             viewModel.getTasks(requireContext())
         }
     }
-    private fun observeLiveData() {
-        viewModel.tasks.observe(viewLifecycleOwner, Observer {
-            var newlist = ArrayList<TaskModel>()
-            when(mySelectedDate){
-                toDay->{ binding.textView.text = "TODAY" }
-                else->{ binding.textView.text = mySelectedDate }
-            }
-            if (!mySelectedDate.equals("all")){
-                println("not all ")
-                println("selected : "+mySelectedDate)
-                it.forEach{
-                    println(it.date)
-                    if (it.date.equals(mySelectedDate)){
-                        newlist.add(it)
-                    }
-                }
-            }else{
-                println("in all ")
-                newlist = it as ArrayList<TaskModel>
-            }
-            adapter.itemList = newlist
 
-            binding.taskrecyclerview.adapter = adapter
-            adapter.notifyDataSetChanged()
-            val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(adapter,newlist))
-            itemTouchHelper.attachToRecyclerView(binding.taskrecyclerview)
-        })
+    private fun observeLiveData() {
         viewModel.selectedDate.observe(viewLifecycleOwner, Observer {
             mySelectedDate = it
         })
         viewModel.toDay.observe(viewLifecycleOwner, Observer {
             toDay = it
         })
+        viewModel.tasks.observe(viewLifecycleOwner, Observer {
+            var newlist = ArrayList<TaskModel>()
+            when (mySelectedDate) {
+                toDay -> {
+                    binding.textView.text = "TODAY"
+                }
+                else -> {
+                    binding.textView.text = mySelectedDate
+                }
+            }
+            if (!mySelectedDate.equals("all")) {
+                it.forEach {
+                    if (it.date.equals(mySelectedDate)) {
+                        newlist.add(it)
+                    }
+                }
+            } else {
+                newlist = it as ArrayList<TaskModel>
+            }
+            adapter.itemList = newlist
+
+            binding.taskrecyclerview.adapter = adapter
+            adapter.notifyDataSetChanged()
+            val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(adapter, newlist))
+            itemTouchHelper.attachToRecyclerView(binding.taskrecyclerview)
+        })
+
     }
+
 }

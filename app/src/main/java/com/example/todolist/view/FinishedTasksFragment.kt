@@ -47,9 +47,7 @@ class FinishedTasksFragment : Fragment() {
         observeLiveData()
         // TaskAdapter'ı oluşturma ve RecyclerView'a bağlama
         binding.taskrecyclerview.layoutManager = LinearLayoutManager(requireContext())
-        binding.button.setOnClickListener {
 
-        }
     }
     private fun observeLiveData() {
         viewModel.tasks.observe(viewLifecycleOwner, Observer {

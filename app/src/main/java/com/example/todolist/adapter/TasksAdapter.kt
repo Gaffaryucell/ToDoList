@@ -6,8 +6,10 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.model.TaskModel
+import com.example.todolist.view.ListFragmentDirections
 
 class TaskAdapter(
     private val onItemClick: (TaskModel) -> Unit,
@@ -24,6 +26,10 @@ class TaskAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = itemList[position]
         holder.bind(item)
+        holder.itemView.setOnClickListener{
+            val action = ListFragmentDirections.actionListFragmentToTaskDetailsFragment(item.id)
+            Navigation.findNavController(it).navigate(action)
+        }
     }
 
     override fun getItemCount(): Int {
