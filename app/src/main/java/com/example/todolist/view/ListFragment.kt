@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -26,6 +27,8 @@ class ListFragment : Fragment() {
     private lateinit var adapter: TaskAdapter
     private lateinit var mySelectedDate: String
     private lateinit var toDay: String
+    private lateinit var taskList: ArrayList<TaskModel>
+    private var allTAsks = ArrayList<TaskModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,6 +72,25 @@ class ListFragment : Fragment() {
             mySelectedDate = "all"
             viewModel.getTasks(requireContext())
         }
+        binding.searchEdittext.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                adapter.itemList = searchList(allTAsks,query.toString()) as ArrayList
+                adapter.notifyDataSetChanged()
+                return false // enter'a basılırsa arama yapılması
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrEmpty()){
+                    adapter.itemList = taskList
+                    adapter.notifyDataSetChanged()
+                }else{
+                    adapter.itemList = searchList(allTAsks,newText.toString()) as ArrayList
+                    adapter.notifyDataSetChanged()
+                }
+                return true
+            }
+        }
+        )
+
     }
 
     private fun observeLiveData() {
@@ -79,6 +101,7 @@ class ListFragment : Fragment() {
             toDay = it
         })
         viewModel.tasks.observe(viewLifecycleOwner, Observer {
+            allTAsks = it as ArrayList
             var newlist = ArrayList<TaskModel>()
             when (mySelectedDate) {
                 toDay -> {
@@ -98,13 +121,25 @@ class ListFragment : Fragment() {
                 newlist = it as ArrayList<TaskModel>
             }
             adapter.itemList = newlist
-
+            taskList = newlist
             binding.taskrecyclerview.adapter = adapter
             adapter.notifyDataSetChanged()
             val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(adapter, newlist))
             itemTouchHelper.attachToRecyclerView(binding.taskrecyclerview)
         })
 
+    }
+
+    fun searchList(list: List<TaskModel>, searchText: String): List<TaskModel> {
+        val searchResults = mutableListOf<TaskModel>()
+
+        for (item in list) {
+            if (item.title.contains(searchText, ignoreCase = true)) {
+                searchResults.add(item)
+            }
+        }
+
+        return searchResults
     }
 
 }
