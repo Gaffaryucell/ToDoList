@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.todolist.dao.TaskDao
 import com.example.todolist.model.TaskModel
 
-@Database(entities = [TaskModel::class], version = 5)
+@Database(entities = [TaskModel::class], version = 6)
 abstract class TaskDatabase : RoomDatabase() {
     abstract fun studentDao(): TaskDao
 }
@@ -20,7 +20,7 @@ object TaskDatabaseSingleton {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     TaskDatabase::class.java,
-                    "data_base_task_aq"
+                    "database_version_6"
                 ).build()
                 INSTANCE = instance
                 instance

@@ -40,7 +40,6 @@ class ListViewModel : ViewModel() {
     fun deleteTask(application : Context,task : TaskModel){
         val db = TaskDatabaseSingleton.getDatabase(application)
         tasksDao = db.studentDao()
-        println("deleted")
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 tasksDao.deleteTask(task)
@@ -63,7 +62,7 @@ class ListViewModel : ViewModel() {
     fun finishTask(application : Context,task : TaskModel){
         val db = TaskDatabaseSingleton.getDatabase(application)
         tasksDao = db.studentDao()
-        var changedTasks = TaskModel(task.id,task.title,task.description,"19/06/2023",true)
+        val changedTasks = TaskModel(task.id,task.title,task.description,task.date,true,task.priority)
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 tasksDao.changeStatus(changedTasks)

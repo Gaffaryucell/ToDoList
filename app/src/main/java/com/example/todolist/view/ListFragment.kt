@@ -1,24 +1,21 @@
 package com.example.todolist.view
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.todolist.R
 import com.example.todolist.adapter.SwipeToDeleteCallback
 import com.example.todolist.adapter.TaskAdapter
 import com.example.todolist.databinding.FragmentListBinding
 import com.example.todolist.model.TaskModel
 import com.example.todolist.viewmodel.ListViewModel
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 class ListFragment : Fragment() {
 
@@ -73,11 +70,13 @@ class ListFragment : Fragment() {
             viewModel.getTasks(requireContext())
         }
         binding.searchEdittext.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{
+            @SuppressLint("NotifyDataSetChanged")
             override fun onQueryTextSubmit(query: String?): Boolean {
                 adapter.itemList = searchList(allTAsks,query.toString()) as ArrayList
                 adapter.notifyDataSetChanged()
                 return false // enter'a basılırsa arama yapılması
             }
+            @SuppressLint("NotifyDataSetChanged")
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrEmpty()){
                     adapter.itemList = taskList
@@ -93,6 +92,7 @@ class ListFragment : Fragment() {
 
     }
 
+    @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
     private fun observeLiveData() {
         viewModel.selectedDate.observe(viewLifecycleOwner, Observer {
             mySelectedDate = it
@@ -118,10 +118,11 @@ class ListFragment : Fragment() {
                     }
                 }
             } else {
-                newlist = it as ArrayList<TaskModel>
+                newlist = it
+
             }
-            adapter.itemList = newlist
             taskList = newlist
+            adapter.itemList = newlist
             binding.taskrecyclerview.adapter = adapter
             adapter.notifyDataSetChanged()
             val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(adapter, newlist))
@@ -134,7 +135,7 @@ class ListFragment : Fragment() {
         val searchResults = mutableListOf<TaskModel>()
 
         for (item in list) {
-            if (item.title.contains(searchText, ignoreCase = true)) {
+            if (item.title.contains(searchText, ignoreCase = true)||item.description.contains(searchText,ignoreCase = true)) {
                 searchResults.add(item)
             }
         }

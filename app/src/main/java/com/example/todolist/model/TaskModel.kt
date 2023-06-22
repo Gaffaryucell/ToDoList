@@ -3,7 +3,6 @@ package com.example.todolist.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.time.LocalDate
 
 @Entity(tableName = "tasks")
 class TaskModel(
@@ -17,5 +16,7 @@ class TaskModel(
     @ColumnInfo(name = "dueDate")
     val date: String,   // Görevin tamamlanması gereken tarih.
     @ColumnInfo(name = "isComplete")
-    val isComplete: Boolean
+    val isComplete: Boolean,
+    @ColumnInfo(name = "priority")
+    val priority: String
 )

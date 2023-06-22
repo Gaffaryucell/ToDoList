@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     android:layout_marginBottom="10dp"
-    android:layout_width="match_parent"
-    android:layout_height="250dp"
-    android:background="@drawable/card_background"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal">
 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:background="@drawable/low_back">
+
+    <!-- Başlık -->
     <TextView
         android:id="@+id/title_textview"
         android:layout_width="match_parent"
@@ -15,6 +16,7 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
+    <!-- Açıklama -->
     <TextView
         android:id="@+id/description_textview"
         android:layout_width="match_parent"
@@ -24,6 +26,7 @@
         android:layout_below="@id/title_textview"
         android:layout_marginTop="16dp" />
 
+    <!-- Tarih -->
     <TextView
         android:id="@+id/date_textview"
         android:layout_width="wrap_content"
@@ -34,9 +37,6 @@
         android:text="Tarih"
         android:textSize="14sp"
         android:textColor="#FFFFFF"
-        android:background="#FF4081" />
-
+        android:background="#03DAC5" />
 
 </RelativeLayout>
-
-

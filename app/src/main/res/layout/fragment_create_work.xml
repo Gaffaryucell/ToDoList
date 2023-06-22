@@ -11,39 +11,60 @@
         android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="To-Do List"
+        android:text="Create Task"
         android:textSize="24sp"
         android:textStyle="bold"
         android:padding="16dp" />
 
     <EditText
         android:id="@+id/etTaskTitle"
+        android:textSize="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Yapılacak görevi girin"
+        android:hint="Enter Your Task Title"
         android:padding="16dp" />
 
     <EditText
         android:id="@+id/etTaskDescription"
+        android:gravity="left"
+        android:textSize="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:hint="Enter Your task Description"
+        android:padding="16dp" />
+
+    <Spinner
+        android:entries="@array/priority_list"
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="44dp" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Yapılacak görevi girin"
-        android:padding="16dp" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/buttonAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ekle"
-        android:layout_gravity="end"
-        android:padding="16dp" />
+        <ImageView
+            android:layout_marginStart="5dp"
+            android:id="@+id/calendar_image_view"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/calendar"
+            android:layout_gravity="start" />
 
-    <ImageView
-        android:id="@+id/calendar_image_view"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/calendar" />
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
+        <Button
+            android:id="@+id/buttonAdd"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Ekle"
+            android:layout_gravity="end"/>
+
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"

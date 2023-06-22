@@ -7,10 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.ItemTouchHelper
-import com.example.todolist.R
-import com.example.todolist.adapter.SwipeToDeleteCallback
-import com.example.todolist.databinding.FragmentListBinding
 import com.example.todolist.databinding.FragmentTaskDetailsBinding
 import com.example.todolist.model.TaskModel
 import com.example.todolist.viewmodel.TaskDetailsViewModel
@@ -45,8 +41,9 @@ class TaskDetailsFragment : Fragment() {
         viewModel.task.observe(viewLifecycleOwner, Observer {
             task = it
             binding.tvTitle.text = it.title
-            binding.tvDescription.text = it.title
+            binding.tvDescription.text = it.description
             binding.tvDate.text = it.date
+            binding.priority.text = it.priority
         })
     }
 }

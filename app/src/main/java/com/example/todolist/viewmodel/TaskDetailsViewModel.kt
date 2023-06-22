@@ -20,7 +20,7 @@ class TaskDetailsViewModel : ViewModel() {
         tasksDao = db.studentDao()
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                var myTask = tasksDao.getTasksById(id)
+                val myTask = tasksDao.getTasksById(id)
                 task.postValue(myTask) // Verileri MutableLiveData'nin postValue() fonksiyonuyla güncelle
             } catch (e: Exception) {
                 println(e.localizedMessage)
@@ -30,7 +30,7 @@ class TaskDetailsViewModel : ViewModel() {
     fun finishTask(application : Context,task : TaskModel){
         val db = TaskDatabaseSingleton.getDatabase(application)
         tasksDao = db.studentDao()
-        var changedTasks = TaskModel(task.id,task.title,task.description,"19/06/2023",true)
+        val changedTasks = TaskModel(task.id,task.title,task.description,"19/06/2023",true,task.priority)
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 tasksDao.changeStatus(changedTasks)

@@ -25,12 +25,12 @@ class CreateTaskViewModel : ViewModel() {
     init {
         getDate()
     }
-    fun createTask(application : Context,title : String,description : String,date : String){
+    fun createTask(application : Context,title : String,description : String,date : String,priority : String){
         val db = TaskDatabaseSingleton.getDatabase(application)
         tasksDao = db.studentDao()
         // Task ekle
         CoroutineScope(Dispatchers.IO).launch {
-            val task = TaskModel(0, title,description,date,false)
+            val task = TaskModel(0, title,description,date,false,priority)
             tasksDao.insertTask(task)
         }
     }
