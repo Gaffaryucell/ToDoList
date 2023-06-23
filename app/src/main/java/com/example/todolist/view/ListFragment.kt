@@ -69,6 +69,10 @@ class ListFragment : Fragment() {
             mySelectedDate = "all"
             viewModel.getTasks(requireContext())
         }
+        binding.gotoFinished.setOnClickListener {
+            val action = ListFragmentDirections.actionListFragmentToFinishedTasksFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
         binding.searchEdittext.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{
             @SuppressLint("NotifyDataSetChanged")
             override fun onQueryTextSubmit(query: String?): Boolean {
